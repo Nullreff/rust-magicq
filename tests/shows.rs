@@ -4,5 +4,4 @@ use magicq::Showfile;
 use similar_asserts::assert_eq;
 
 // See testsgenerator/src/lib.rs
-generate_tests!("../events");
-generate_tests!("../show");
+generate_tests!("tests/shows");

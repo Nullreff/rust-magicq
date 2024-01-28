@@ -22,8 +22,8 @@ pub fn generate_tests(input: TokenStream) -> TokenStream {
 
     // Generate a test for each file
     let tests = shw_files.iter().map(|file| {
-        let file_name = file.to_string_lossy();
-        let file_path = format!("{}/{}", dir_path, file_name);
+        let file_name = file.file_name().unwrap().to_str().unwrap();
+        let file_path = file.as_path().to_str().unwrap();
 
         let safe_file_name = file_name.replace(&['/', '.', '\\', '-', ' '][..], "_");
         let test_name = Ident::new(&format!("test{}", safe_file_name), proc_macro2::Span::call_site());
@@ -31,6 +31,7 @@ pub fn generate_tests(input: TokenStream) -> TokenStream {
         quote! {
             #[test]
             fn #test_name() {
+                println!("Running tests on {}", #file_path);
                 // Read in a showfile, check we parsed it then write it back out
                 let input = std::fs::read_to_string(&#file_path).unwrap();
 
