@@ -12,14 +12,14 @@ struct Version {
 fn get_hex(value: &Value, len: usize) -> Result<u64, String> {
     match value {
         Value::Hex(v, l) if *l == len => Ok(*v),
-        Value::Hex(v, l) => Err(format!("Hex value is {} characters long instead of {}", l, len)),
+        Value::Hex(v, l) => Err(format!("Hex value {} is {} characters long instead of {}", v, l, len)),
         _ => Err(format!("Hex value expected, got {:?} instead", value))
     }
 }
 
 fn get_string(value: &Value) -> Result<String, String> {
     match value {
-        Value::String(s) => Ok(*s),
+        Value::String(s) => Ok(s.clone()),
         _ => Err(format!("String value expected, got {:?} instead", value))
     }
 }
